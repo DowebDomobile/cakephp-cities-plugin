@@ -12,7 +12,7 @@
  * @since     3.0.0
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Console;
+namespace Dwdm\Cities\Console;
 
 use Cake\Utility\Security;
 use Composer\Script\Event;

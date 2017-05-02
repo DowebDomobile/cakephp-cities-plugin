@@ -12,10 +12,11 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace Dwdm\Cities\Controller;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
+use Cake\Utility\Hash;
 
 /**
  * Application Controller
@@ -60,10 +61,16 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
-            $this->set('_serialize', true);
+        $this->set('success', Hash::get($this->viewVars, 'success', empty($this->viewVars['errors'])));
+        $this->set('message', Hash::get($this->viewVars, 'message', ''));
+        $this->set('errors', Hash::get($this->viewVars, 'errors', []));
+
+        if (in_array($this->response->type(), ['application/json', 'application/xml'])) {
+            $serialize = ['success', 'message', 'errors'];
+            $this->set(
+                '_serialize',
+                Hash::merge($serialize, Hash::get($this->viewVars, '_serialize', array_keys($this->viewVars)))
+            );
         }
     }
 }
