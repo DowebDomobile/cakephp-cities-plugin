@@ -3,3 +3,4 @@
 /tmp/*
 /logs/*
 composer.phar
+/config/Migrations/schema-dump-default.lock
