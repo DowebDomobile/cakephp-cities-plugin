@@ -1,25 +1,18 @@
 <?php
+/**
+ * @copyright     Copyright (c) DowebDomobile (http://dowebdomobile.ru)
+ */
 namespace Dwdm\Cities\Controller\Api;
 
 use Dwdm\Cities\Controller\AppController;
+use Dwdm\Cities\Model\Table\CitiesTable;
 
 /**
  * Cities Controller
  *
- * @property \Dwdm\Cities\Model\Table\CitiesTable $Cities
+ * @property CitiesTable $Cities
  */
 class CitiesController extends AppController
 {
-
-    /**
-     * Index method
-     *
-     * @return \Cake\Network\Response|null
-     */
-    public function index()
-    {
-        $cities = $this->Cities->find()->where(['region_id' => $this->request->getParam('region_id')])->all();
-
-        $this->set(compact('cities'));
-    }
+    use CitiesTrait;
 }
