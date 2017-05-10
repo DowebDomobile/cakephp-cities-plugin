@@ -30,10 +30,22 @@ class CitiesSeed extends AbstractSeed
             )
         );
 
-        $map = ['id' => 'city_id', 'region_id' => 'region_id', 'name' => 'title_ru'];
+        $map = ['id' => 'city_id', 'region_id' => 'region_id', 'name' => 'title_ru', 'country_id' => 'country_id'];
         while ($data = $csv->read('_cities.csv', $map)) {
+            foreach ($data as $key => $row) {
+                if ($row['country_id'] != 1) {
+                    unset($data[$key]);
+                } else {
+                    unset($data[$key]['country_id']);
+                }
+            }
+
+            if (empty($data)) {
+                continue;
+            }
+
             $this->table('cities')
-                ->insert($data)
+                ->insert(array_values($data))
                 ->save();
         }
     }
