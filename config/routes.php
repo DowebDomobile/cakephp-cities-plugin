@@ -12,6 +12,12 @@ Router::plugin(
             function (RouteBuilder $routes) {
                 $routes->extensions(['json']);
 
+                $routes->connect(
+                    '/cities/:search',
+                    ['controller' => 'Cities', 'action' => 'search'],
+                    [':search' => '.*']
+                );
+
                 $routes->resources(
                     'Countries',
                     ['inflect' => 'dasherize',],

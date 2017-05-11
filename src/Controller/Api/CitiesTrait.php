@@ -28,4 +28,13 @@ trait CitiesTrait
 
         $this->set(compact('cities'));
     }
+
+    public function search()
+    {
+        $search = $this->request->getParam('search');
+
+        $cities = $this->Cities->find()->contain(['Regions'])->where(['Cities.name LIKE' => "%$search%"])->all();
+
+        $this->set(compact('cities'));
+    }
 }

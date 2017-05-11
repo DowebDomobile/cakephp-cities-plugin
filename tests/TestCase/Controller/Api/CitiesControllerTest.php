@@ -2,7 +2,6 @@
 namespace Dwdm\Cities\Test\TestCase\Controller\Api;
 
 use Cake\TestSuite\IntegrationTestCase;
-use Dwdm\Cities\Controller\Api\CitiesController;
 
 /**
  * Dwdm\Cities\Controller\Api\CitiesController Test Case
@@ -36,6 +35,29 @@ class CitiesControllerTest extends IntegrationTestCase
         $this->assertResponseEquals(
             json_encode(
                 ['success' => true, 'message' => '', 'errors' => [], 'cities' => $cities],
+                JSON_PRETTY_PRINT
+            )
+        );
+    }
+
+    public function testSearch()
+    {
+        $this->get('/cities/api/cities/Бар.json');
+
+        $this->assertResponseSuccess();
+        $this->assertResponseEquals(
+            json_encode(
+                [
+                    'success' => true,
+                    'message' => '',
+                    'errors' => [],
+                    'cities' => [[
+                        'id' => 1,
+                        'region_id' => 1,
+                        'name' => 'Барнаул',
+                        'region' => ['id' => 1, 'country_id' => 1, 'name' => 'Алтайский край']
+                    ]]
+                ],
                 JSON_PRETTY_PRINT
             )
         );
