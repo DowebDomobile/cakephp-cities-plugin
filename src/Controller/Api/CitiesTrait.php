@@ -33,7 +33,7 @@ trait CitiesTrait
     {
         $search = $this->request->getParam('search');
 
-        $cities = $this->Cities->find()->contain(['Regions'])->where(['Cities.name LIKE' => "%$search%"])->all();
+        $cities = $this->Cities->find()->contain(['Regions'])->where(['Cities.name ILIKE' => "%$search%"])->all();
 
         $this->set(compact('cities'));
     }
