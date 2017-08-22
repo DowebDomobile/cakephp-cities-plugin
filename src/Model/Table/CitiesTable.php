@@ -32,7 +32,7 @@ class CitiesTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('cities');
+        $this->setTable('cities_cities');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 

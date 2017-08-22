@@ -12,7 +12,7 @@ class CreateCountries extends AbstractMigration
      */
     public function change()
     {
-        $this->table('countries')
+        $this->table('cities_countries')
             ->addColumn('name', 'string', ['length' => 100, 'default' => null, 'null' => false])
             ->create();
     }
