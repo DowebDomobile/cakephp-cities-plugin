@@ -12,10 +12,10 @@ class CreateRegions extends AbstractMigration
      */
     public function change()
     {
-        $this->table('regions')
+        $this->table('cities_regions')
             ->addColumn('country_id', 'integer', ['length' => 11, 'default' => null, 'null' => true])
             ->addColumn('name', 'string', ['length' => 100, 'default' => null, 'null' => false])
-            ->addForeignKey('country_id', 'countries', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
+            ->addForeignKey('country_id', 'cities_countries', 'id', ['delete' => 'CASCADE', 'update' => 'CASCADE'])
             ->create();
     }
 }

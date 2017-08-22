@@ -33,7 +33,7 @@ class RegionsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('regions');
+        $this->setTable('cities_regions');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 

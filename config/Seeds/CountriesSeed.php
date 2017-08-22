@@ -32,7 +32,7 @@ class CountriesSeed extends AbstractSeed
 
         $map = ['id' => 'country_id', 'name' => 'title_ru'];
         while ($data = $csv->read('_countries.csv', $map)) {
-            $this->table('countries')
+            $this->table('cities_countries')
                 ->insert($data)
                 ->save();
         }

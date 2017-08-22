@@ -44,7 +44,7 @@ class CitiesSeed extends AbstractSeed
                 continue;
             }
 
-            $this->table('cities')
+            $this->table('cities_cities')
                 ->insert(array_values($data))
                 ->save();
         }

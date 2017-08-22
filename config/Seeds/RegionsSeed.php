@@ -31,7 +31,7 @@ class RegionsSeed extends AbstractSeed
         );
         $map = ['id' => 'region_id', 'country_id' => 'country_id', 'name' => 'title_ru'];
         while ($data =  $csv->read('_regions.csv', $map)) {
-            $this->table('regions')
+            $this->table('cities_regions')
                 ->insert($data)
                 ->save();
         }
