@@ -27,7 +27,7 @@ class FiasShell extends Shell
                 'arguments' => ['input' => ['help' => 'Input filename.', 'required' => true]],
                 'options' => [
                     'regions' => ['help' => 'Regions output file.', 'short' => 'r', 'default' => false],
-                    'districts' => ['help' => 'Districts output file.', 'short' => 'd', 'default' => false],
+                    'areas' => ['help' => 'Areas output file.', 'short' => 'a', 'default' => false],
                     'cities' => ['help' => 'Cities output file.', 'short' => 'c', 'default' => false],
                 ]
             ]
@@ -52,7 +52,7 @@ class FiasShell extends Shell
 
         $levels = [
             1 => $this->getLevel('regions'),
-            3 => $this->getLevel('districts'),
+            3 => $this->getLevel('areas'),
             4 => $this->getLevel('cities'),
             6 => $this->getLevel('cities'),
         ];
@@ -65,7 +65,9 @@ class FiasShell extends Shell
                             $options->file = fopen($options->file, 'w');
                         }
                         $data = $this->{'_prepare' . ucfirst($options->name)}(simplexml_load_string($buffer));
-                        fputcsv($options->file, $data);
+                        if ((1 == $data['live']) && !in_array($data['short'], ['тер', 'автодорога', 'массив'])) {
+                            fputcsv($options->file, $data);
+                        }
                     }
                 }
             }
@@ -76,30 +78,21 @@ class FiasShell extends Shell
     {
         $attributes = ((array)$xmlObject->attributes())['@attributes'];
 
-//        if (in_array($attributes['REGIONCODE'], ['02', '24', '55', '66', '34', '76', '75'])) {
-//            $a = 1;
-//        }
-
         return [
-            'code' => $attributes['REGIONCODE'],
             'plain' => $attributes['PLAINCODE'],
             'name' => $attributes['FORMALNAME'],
-            'off' => $attributes['OFFNAME'],
             'short' => $attributes['SHORTNAME'],
             'live' => (string)Hash::get($attributes, 'LIVESTATUS', '0'),
         ];
     }
 
-    protected function _prepareDistricts(\SimpleXMLElement $xmlObject)
+    protected function _prepareAreas(\SimpleXMLElement $xmlObject)
     {
         $attributes = ((array)$xmlObject->attributes())['@attributes'];
 
         return [
-            'regionCode' => $attributes['REGIONCODE'],
-            'code' => $attributes['AREACODE'],
             'plain' => $attributes['PLAINCODE'],
             'name' => $attributes['FORMALNAME'],
-            'off' => $attributes['OFFNAME'],
             'short' => $attributes['SHORTNAME'],
             'live' => (string)Hash::get($attributes, 'LIVESTATUS', '0'),
         ];
@@ -110,12 +103,8 @@ class FiasShell extends Shell
         $attributes = ((array)$xmlObject->attributes())['@attributes'];
 
         return [
-            'regionCode' => $attributes['REGIONCODE'],
-            'areaCode' => $attributes['AREACODE'],
-            'code' => $attributes['CITYCODE'] === '000' ? $attributes['PLACECODE'] : $attributes['CITYCODE'],
             'plain' => $attributes['PLAINCODE'],
             'name' => $attributes['FORMALNAME'],
-            'off' => $attributes['OFFNAME'],
             'short' => $attributes['SHORTNAME'],
             'live' => (string)Hash::get($attributes, 'LIVESTATUS', '0'),
         ];

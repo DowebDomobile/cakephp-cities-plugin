@@ -8,7 +8,6 @@
         "cakephp/cakephp": "3.4.*",
         "cakephp/migrations": "~1.0",
         "cakephp/plugin-installer": "*",
-        "x88/i18nGeoNamesDB": "^0.4.0"
     },
     "require-dev": {
         "psy/psysh": "@stable",
@@ -44,19 +43,5 @@
         "cs-fix": "phpcbf --colors --standard=vendor/cakephp/cakephp-codesniffer/CakePHP ./src ./tests",
         "test": "phpunit --colors=always"
     },
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "package",
-            "package": {
-                "name": "x88/i18nGeoNamesDB",
-                "version": "0.4",
-                "source": {
-                    "url": "https://github.com/x88/i18nGeoNamesDB.git",
-                    "type": "git",
-                    "reference": "master"
-                }
-            }
-        }
-    ]
+    "prefer-stable": true
 }
