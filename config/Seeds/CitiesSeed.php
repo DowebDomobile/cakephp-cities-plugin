@@ -19,33 +19,18 @@ class CitiesSeed extends AbstractSeed
      */
     public function run()
     {
-        $csv = new Csv(
-            implode(
-                DS,
-                [
-                    'zip:/',
-                    ROOT,
-                    'vendor/x88/i18nGeoNamesDB/i18n_GeoCSVDump_with_header_qouted_delimiter_comma_v0.4.zip#'
-                ]
-            )
-        );
-
-        $map = ['id' => 'city_id', 'region_id' => 'region_id', 'name' => 'title_ru', 'country_id' => 'country_id'];
-        while ($data = $csv->read('_cities.csv', $map)) {
-            foreach ($data as $key => $row) {
-                if ($row['country_id'] != 1) {
-                    unset($data[$key]);
-                } else {
-                    unset($data[$key]['country_id']);
-                }
-            }
-
-            if (empty($data)) {
-                continue;
-            }
-
+        $csv = new Csv(implode(DS, [__DIR__, 'data', '']));
+        while ($data = $csv->read('cities.csv', function ($header, $row) {
+            return [
+                'region_code' => substr($row[0], 0, 2),
+                'area_code' => '000' === substr($row[0], 2, 3) ? null : substr($row[0], 0, 5),
+                'code' => $row[0],
+                'name' => $row[1],
+                'short' => $row[2],
+            ];
+        })) {
             $this->table('cities_cities')
-                ->insert(array_values($data))
+                ->insert($data)
                 ->save();
         }
     }

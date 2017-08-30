@@ -18,8 +18,8 @@ class MasterSeed extends AbstractSeed
      */
     public function run()
     {
-        $this->call('CountriesSeed');
         $this->call('RegionsSeed');
+        $this->call('AreasSeed');
         $this->call('CitiesSeed');
     }
 }

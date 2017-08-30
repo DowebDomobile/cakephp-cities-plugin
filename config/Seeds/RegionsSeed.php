@@ -19,18 +19,14 @@ class RegionsSeed extends AbstractSeed
      */
     public function run()
     {
-        $csv = new Csv(
-            implode(
-                DS,
-                [
-                    'zip:/',
-                    ROOT,
-                    'vendor/x88/i18nGeoNamesDB/i18n_GeoCSVDump_with_header_qouted_delimiter_comma_v0.4.zip#'
-                ]
-            )
-        );
-        $map = ['id' => 'region_id', 'country_id' => 'country_id', 'name' => 'title_ru'];
-        while ($data =  $csv->read('_regions.csv', $map)) {
+        $csv = new Csv(implode(DS, [__DIR__, 'data', '']));
+        while ($data = $csv->read('regions.csv', function ($head, $row) {
+            return [
+                'code' => substr($row[0], 0, 2),
+                'name' => $row[1],
+                'short' => $row[2],
+            ];
+        })) {
             $this->table('cities_regions')
                 ->insert($data)
                 ->save();

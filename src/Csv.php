@@ -32,11 +32,17 @@ class Csv
             $this->_currentName = $name;
         }
 
+        $header = isset($header) ? $header : $this->_header;
+
         $data = [];
         while ((--$count >= 0) && ($row = fgetcsv($this->_fp, null, ','))) {
             $dataRow = [];
-            foreach ($map as $k => $v) {
-                $dataRow[$k] = !empty($row[$this->_header[$v]]) ? $row[$this->_header[$v]] : null;
+            if (is_callable($map)) {
+                $dataRow = call_user_func($map, $header, $row);
+            } elseif (is_array($map)) {
+                foreach ($map as $k => $v) {
+                    $dataRow[$k] = !empty($row[$this->_header[$v]]) ? $row[$this->_header[$v]] : null;
+                }
             }
             $data[] = $dataRow;
         }
