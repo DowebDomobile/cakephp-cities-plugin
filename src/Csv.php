@@ -35,7 +35,7 @@ class Csv
         $header = isset($header) ? $header : $this->_header;
 
         $data = [];
-        while ((--$count >= 0) && ($row = fgetcsv($this->_fp, null, ','))) {
+        while (($count >= 0) && ($row = fgetcsv($this->_fp, null, ','))) {
             $dataRow = [];
             if (is_callable($map)) {
                 $dataRow = call_user_func($map, $header, $row);
@@ -44,7 +44,11 @@ class Csv
                     $dataRow[$k] = !empty($row[$this->_header[$v]]) ? $row[$this->_header[$v]] : null;
                 }
             }
-            $data[] = $dataRow;
+
+            if (!empty($dataRow)) {
+                $count--;
+                $data[] = $dataRow;
+            }
         }
 
         if (empty($data)) {

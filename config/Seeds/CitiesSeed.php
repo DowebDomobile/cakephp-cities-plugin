@@ -33,5 +33,23 @@ class CitiesSeed extends AbstractSeed
                 ->insert($data)
                 ->save();
         }
+
+        while ($data = $csv->read('regions.csv', function ($header, $row) {
+            if ('г' != $row[2]) {
+                return [];
+            }
+
+            return [
+                'region_code' => substr($row[0], 0, 2),
+                'area_code' => null,
+                'code' => $row[0],
+                'name' => $row[1],
+                'short' => $row[2],
+            ];
+        })) {
+            $this->table('cities_cities')
+                ->insert($data)
+                ->save();
+        }
     }
 }
