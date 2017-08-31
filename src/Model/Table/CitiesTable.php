@@ -9,8 +9,6 @@ use Cake\Validation\Validator;
 /**
  * Cities Model
  *
- * @property \Cake\ORM\Association\BelongsTo $Regions
- *
  * @method \Dwdm\Cities\Model\Entity\City get($primaryKey, $options = [])
  * @method \Dwdm\Cities\Model\Entity\City newEntity($data = null, array $options = [])
  * @method \Dwdm\Cities\Model\Entity\City[] newEntities(array $data, array $options = [])
@@ -34,11 +32,10 @@ class CitiesTable extends Table
 
         $this->setTable('cities_cities');
         $this->setDisplayField('name');
-        $this->setPrimaryKey('id');
+        $this->setPrimaryKey('code');
 
-        $this->belongsTo('Regions', [
-            'foreignKey' => 'region_id'
-        ]);
+        $this->belongsTo('Regions', ['className' => 'Dwdm/Cities.Regions', 'foreignKey' => 'region_code']);
+        $this->belongsTo('Areas', ['className' => 'Dwdm/Cities.Areas', 'foreignKey' => 'area_code']);
     }
 
     /**
@@ -50,27 +47,23 @@ class CitiesTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('id')
-            ->allowEmpty('id', 'create');
+            ->requirePresence('region_code', 'create')
+            ->notEmpty('region_code');
+
+        $validator
+            ->allowEmpty('area_code');
+
+        $validator
+            ->allowEmpty('code', 'create');
 
         $validator
             ->requirePresence('name', 'create')
             ->notEmpty('name');
 
+        $validator
+            ->requirePresence('short', 'create')
+            ->notEmpty('short');
+
         return $validator;
-    }
-
-    /**
-     * Returns a rules checker object that will be used for validating
-     * application integrity.
-     *
-     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
-     * @return \Cake\ORM\RulesChecker
-     */
-    public function buildRules(RulesChecker $rules)
-    {
-        $rules->add($rules->existsIn(['region_id'], 'Regions'));
-
-        return $rules;
     }
 }

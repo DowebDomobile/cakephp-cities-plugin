@@ -14,7 +14,7 @@
  */
 namespace Dwdm\Cities\Controller;
 
-use Cake\Controller\Controller;
+use App\Controller\AppController as BaseController;
 use Cake\Event\Event;
 use Cake\Utility\Hash;
 
@@ -26,7 +26,7 @@ use Cake\Utility\Hash;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
+class AppController extends BaseController
 {
 
     /**

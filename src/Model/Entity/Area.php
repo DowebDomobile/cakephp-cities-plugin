@@ -4,14 +4,14 @@ namespace Dwdm\Cities\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Country Entity
+ * Area Entity
  *
- * @property int $id
+ * @property string $region_code
+ * @property string $code
  * @property string $name
- *
- * @property \Dwdm\Cities\Model\Entity\Region[] $regions
+ * @property string $short
  */
-class Country extends Entity
+class Area extends Entity
 {
 
     /**
@@ -25,6 +25,6 @@ class Country extends Entity
      */
     protected $_accessible = [
         '*' => true,
-        'id' => false
+        'code' => false
     ];
 }

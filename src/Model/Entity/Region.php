@@ -6,12 +6,12 @@ use Cake\ORM\Entity;
 /**
  * Region Entity
  *
- * @property int $id
- * @property int $country_id
+ * @property string $code
  * @property string $name
+ * @property string $short
  *
- * @property \Dwdm\Cities\Model\Entity\Country $country
- * @property \Dwdm\Cities\Model\Entity\City[] $cities
+ * @property \App\Model\Entity\Country $country
+ * @property \App\Model\Entity\City[] $cities
  */
 class Region extends Entity
 {

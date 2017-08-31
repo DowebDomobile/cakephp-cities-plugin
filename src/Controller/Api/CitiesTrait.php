@@ -24,7 +24,7 @@ trait CitiesTrait
      */
     public function index()
     {
-        $cities = $this->Cities->find()->where(['region_id' => $this->request->getParam('region_id')])->all();
+        $cities = $this->Cities->find()->where(['region_code' => $this->request->getParam('region_code')])->all();
 
         $this->set(compact('cities'));
     }
@@ -34,9 +34,9 @@ trait CitiesTrait
         $search = $this->request->getParam('search');
 
         $cities = $this->Cities->find()
-            ->contain(['Regions'])
+            ->contain(['Regions', 'Areas'])
             ->where(['Cities.name ILIKE' => "$search%"])
-            ->limit(isset($this->paginate['limit']) ? $this->paginate['limit'] : 40)
+            ->limit(isset($this->paginate['limit']) ? $this->paginate['limit'] : 100)
             ->all();
 
         $this->set(compact('cities'));

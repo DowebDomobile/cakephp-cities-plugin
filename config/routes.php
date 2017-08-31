@@ -19,16 +19,10 @@ Router::plugin(
                 );
 
                 $routes->resources(
-                    'Countries',
+                    'Regions',
                     ['inflect' => 'dasherize',],
                     function (RouteBuilder $routes) {
-                        $routes->resources(
-                            'Regions',
-                            ['inflect' => 'dasherize',],
-                            function (RouteBuilder $routes) {
-                                $routes->resources('Cities', ['inflect' => 'dasherize',]);
-                            }
-                        );
+                        $routes->resources('Cities', ['inflect' => 'dasherize',]);
                     }
                 );
             }
