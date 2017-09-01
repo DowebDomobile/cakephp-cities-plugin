@@ -13,9 +13,9 @@ Router::plugin(
                 $routes->extensions(['json']);
 
                 $routes->connect(
-                    '/cities/:search',
+                    '/cities/:city/:search',
                     ['controller' => 'Cities', 'action' => 'search'],
-                    [':search' => '.*']
+                    [':city' => '.*', ':search' => '.*', 'pass' => ['city', 'search']]
                 );
 
                 $routes->resources(

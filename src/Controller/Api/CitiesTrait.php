@@ -29,13 +29,12 @@ trait CitiesTrait
         $this->set(compact('cities'));
     }
 
-    public function search()
+    public function search($city, $search)
     {
-        $search = $this->request->getParam('search');
-
-        $cities = $this->Cities->find()
-            ->contain(['Regions', 'Areas'])
-            ->where(['Cities.name ILIKE' => "$search%"])
+        $cities = $this->loadModel('Dwdm/Cities.Fias')
+            ->find()
+            ->contain(['Region', 'Area'])
+            ->where(($city == 1 ? ['Fias.is_locality' => true] : []) + ['Fias.name ILIKE' => "%$search%"])
             ->limit(isset($this->paginate['limit']) ? $this->paginate['limit'] : 100)
             ->all();
 
