@@ -29,8 +29,10 @@ trait CitiesTrait
         $this->set(compact('cities'));
     }
 
-    public function search($city, $search)
+    public function search($city, $search = null)
     {
+        $search = isset($search) ? $search : $this->request->getQuery('name');
+
         $cities = $this->loadModel('Dwdm/Cities.Fias')
             ->find()
             ->contain(['Region', 'Area'])

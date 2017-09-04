@@ -17,6 +17,11 @@ Router::plugin(
                     ['controller' => 'Cities', 'action' => 'search'],
                     [':city' => '.*', ':search' => '.*', 'pass' => ['city', 'search']]
                 );
+                $routes->connect(
+                    '/cities/:city',
+                    ['controller' => 'Cities', 'action' => 'search'],
+                    [':city' => '.*',  'pass' => ['city']]
+                );
 
                 $routes->resources(
                     'Regions',
