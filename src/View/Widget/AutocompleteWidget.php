@@ -14,6 +14,9 @@ use Cake\View\Widget\WidgetInterface;
  */
 class AutocompleteWidget extends BasicWidget
 {
+    /**
+     * {@inheritDoc}
+     */
     public function render(array $data, ContextInterface $context)
     {
         $data += [
@@ -26,16 +29,29 @@ class AutocompleteWidget extends BasicWidget
 
         return $this->_templates->format('input', [
                 'type' => 'text',
-                'name' => '',
-                'attrs' => $this->_templates->formatAttributes($data, ['name'])
+                'name' => $data['name'] . '_name',
+                'attrs' => $this->_templates->formatAttributes(['value' => $data['stringValue']] + $data, ['name'])
             ]) . $this->_templates->format('input', [
                 'type' => 'hidden',
                 'name' => $data['name'],
                 'attrs' => $this->_templates->formatAttributes([
                     'id' => $data['id'] . '-hidden',
-                    'val' => $data['val'],
+                    'value' => $data['val'],
                     'class' => 'js-autocomplete-hidden'
                 ], ['name'])
             ]);
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function secureFields(array $data)
+    {
+        if (!isset($data['name']) || $data['name'] === '') {
+            return [];
+        }
+
+        return [$data['name'], $data['name'] . '_name'];
+    }
+
 }
