@@ -31,7 +31,7 @@ trait CitiesTrait
 
     public function search()
     {
-        $search = $this->request->getParam('search');
+        $search = trim($this->request->getParam('search'));
 
         $cities = $this->Cities->find()
             ->contain(['Regions'])

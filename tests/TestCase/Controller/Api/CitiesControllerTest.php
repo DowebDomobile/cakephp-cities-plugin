@@ -85,4 +85,27 @@ class CitiesControllerTest extends IntegrationTestCase
             )
         );
     }
+
+    public function testSearchWithSpaces()
+    {
+        $this->get('/cities/api/cities/ бар .json');
+
+        $this->assertResponseSuccess();
+        $this->assertResponseEquals(
+            json_encode(
+                [
+                    'success' => true,
+                    'message' => '',
+                    'errors' => [],
+                    'cities' => [[
+                        'id' => 1,
+                        'region_id' => 1,
+                        'name' => 'Барнаул',
+                        'region' => ['id' => 1, 'country_id' => 1, 'name' => 'Алтайский край']
+                    ]]
+                ],
+                JSON_PRETTY_PRINT
+            )
+        );
+    }
 }
