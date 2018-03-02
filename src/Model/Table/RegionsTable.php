@@ -1,7 +1,6 @@
 <?php
 namespace Dwdm\Cities\Model\Table;
 
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
@@ -38,9 +37,11 @@ class RegionsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Countries', [
+            'className' => CountriesTable::class,
             'foreignKey' => 'country_id'
         ]);
         $this->hasMany('Cities', [
+            'className' => CitiesTable::class,
             'foreignKey' => 'region_id'
         ]);
     }

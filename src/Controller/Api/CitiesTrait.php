@@ -34,7 +34,7 @@ trait CitiesTrait
         $search = trim($this->request->getParam('search'));
 
         $cities = $this->Cities->find()
-            ->contain(['Regions'])
+            ->contain(['Regions.Countries'])
             ->where(['Cities.name ILIKE' => "$search%"])
             ->limit(isset($this->paginate['limit']) ? $this->paginate['limit'] : 40)
             ->all();
