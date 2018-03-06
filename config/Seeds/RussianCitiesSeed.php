@@ -5,7 +5,7 @@ use Dwdm\Cities\Csv;
 /**
  * Cities seed.
  */
-class CitiesSeed extends AbstractSeed
+class RussianCitiesSeed extends AbstractSeed
 {
     /**
      * Run Method.
@@ -30,13 +30,12 @@ class CitiesSeed extends AbstractSeed
             )
         );
 
-        $map = ['id' => 'city_id', 'region_id' => 'region_id', 'name' => 'title_ru', 'country_id' => 'country_id'];
+        $map = ['id' => 'city_id', 'region_id' => 'region_id', 'name' => 'title_ru',
+            'country_id' => 'country_id', 'area_name' => 'area_ru'];
         while ($data = $csv->read('_cities.csv', $map)) {
             foreach ($data as $key => $row) {
                 if ($row['country_id'] != 1) {
                     unset($data[$key]);
-                } else {
-                    unset($data[$key]['country_id']);
                 }
             }
 

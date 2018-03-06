@@ -20,6 +20,6 @@ class MasterSeed extends AbstractSeed
     {
         $this->call('CountriesSeed');
         $this->call('RegionsSeed');
-        $this->call('CitiesSeed');
+        $this->call('RussianCitiesSeed');
     }
 }
