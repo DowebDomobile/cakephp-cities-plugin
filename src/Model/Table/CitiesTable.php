@@ -39,6 +39,11 @@ class CitiesTable extends Table
             'className' => RegionsTable::class,
             'foreignKey' => 'region_id'
         ]);
+
+        $this->belongsTo('Countries', [
+            'className' => CountriesTable::class,
+            'foreignKey' => 'country_id'
+        ]);
     }
 
     /**

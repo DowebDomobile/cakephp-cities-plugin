@@ -8,9 +8,12 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property int $region_id
+ * @property int $country_id
  * @property string $name
+ * @property string $area_name
  *
  * @property \Dwdm\Cities\Model\Entity\Region $region
+ * @property \Dwdm\Cities\Model\Entity\Country $country
  */
 class City extends Entity
 {
@@ -28,4 +31,6 @@ class City extends Entity
         '*' => true,
         'id' => false
     ];
+
+    protected $_hidden = ['country_id'];
 }
