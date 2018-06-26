@@ -33,10 +33,12 @@ trait CitiesTrait
     {
         $search = trim($this->request->getParam('search'));
 
+        $q = $this->Cities->find();
         $cities = $this->Cities->find()
             ->contain(['Regions', 'Countries'])
             ->where(['Cities.name ILIKE' => "$search%"])
             ->limit(isset($this->paginate['limit']) ? $this->paginate['limit'] : 40)
+            ->order([$q->func()->char_length(['Cities.name' => 'identifier'])])
             ->all();
 
         $this->set(compact('cities'));
